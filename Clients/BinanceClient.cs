@@ -1,15 +1,8 @@
-using System.Net;
-using System.Net.Http.Headers;
-using System.Net.NetworkInformation;
-using System.Text.RegularExpressions;
 using Binance.Net.Clients;
 using Binance.Net.Enums;
-using Binance.Net.Interfaces;
 using Binance.Net.Objects;
 using Binance.Net.Objects.Models.Spot;
 using CryptoExchange.Net.Objects;
-using HtmlAgilityPack;
-using Newtonsoft.Json;
 using WebApplication1.Models;
 using WebApplication1.MongoDB;
 
@@ -73,10 +66,6 @@ public class BinanceInfo
         var options = new BinanceClientOptions()
         {
             ApiCredentials = new BinanceApiCredentials(binanceInfo._apiKey, binanceInfo._secretKey),
-            SpotApiOptions = new BinanceApiClientOptions
-            {
-                BaseAddress = BinanceApiAddresses.TestNet.RestClientAddress
-            }
         };
 
         var client = new BinanceClient(options);
@@ -88,10 +77,10 @@ public class BinanceInfo
             {
                 var convertToUsd =
                     await client.SpotApi.ExchangeData.GetCurrentAvgPriceAsync($"{balance.Asset}USDT");
-                //var currencyUsdPrice = convertToUsd.Data.Price;
-                //var usdBalance = currencyUsdPrice * balance.Total;
+                var currencyUsdPrice = convertToUsd.Data.Price;
+                var usdBalance = currencyUsdPrice * balance.Total;
                 balances.Add(new CurrentBalance
-                    { Asset = balance.Asset, Total = balance.Total, /* UsdPrice = usdBalance  */ });
+                    { Asset = balance.Asset, Total = balance.Total, UsdPrice = usdBalance });
             }
         }
 
@@ -185,10 +174,6 @@ public class BinanceInfo
         var options = new BinanceClientOptions()
         {
             ApiCredentials = new BinanceApiCredentials(binanceInfo._apiKey, binanceInfo._secretKey),
-            SpotApiOptions = new BinanceApiClientOptions
-            {
-                BaseAddress = BinanceApiAddresses.TestNet.RestClientAddress
-            }
         };
         var client = new BinanceClient(options);
 
@@ -220,10 +205,7 @@ public class BinanceInfo
         var options = new BinanceClientOptions()
         {
             ApiCredentials = new BinanceApiCredentials(binanceInfo._apiKey, binanceInfo._secretKey),
-            SpotApiOptions = new BinanceApiClientOptions
-            {
-                BaseAddress = BinanceApiAddresses.TestNet.RestClientAddress
-            }
+           
         };
         var client = new BinanceClient(options);
         var order = await client.SpotApi.Trading.PlaceOrderAsync(symbol, OrderSide.Sell, SpotOrderType.Market, quantity);

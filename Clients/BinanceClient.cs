@@ -14,7 +14,7 @@ public class BinanceInfo
     private string _secretKey;
     private static HttpClient _httpClient;
     static string[] pairs = { "BTCUSDT", "ETHUSDT", "LTCUSDT", "TRXUSDT", "XRPUSDT" };
-    private static string API_KEY_MARKETCAP = "c75b8978-fdc2-4787-8fc4-46054794d584";
+    private static string API_KEY_MARKETCAP = "example";
 
 
     private BinanceInfo(double chatId)

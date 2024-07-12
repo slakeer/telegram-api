@@ -10,7 +10,7 @@ public class DataBase
 
     public DataBase()
     {
-        const string connectionUri = "mongodb+srv://vovavolunets1:1234@cluster0.nx1silf.mongodb.net/?retryWrites=true&w=majority";
+        const string connectionUri = "mongodb+srv://mail:pass@domen.id.mongodb.net/?retryWrites=true&w=majority";
         const string databaseName = "test";
         const string collectionName = "messages";
         var settings = MongoClientSettings.FromConnectionString(connectionUri);
